@@ -69,7 +69,7 @@ def plot_loss(train_metvals,valid_metvals,metric):
     plt.xlabel('Epoch')
     plt.ylabel(metric)
     plt.legend();
- 
+
 
 
 
@@ -77,7 +77,7 @@ def xmax_fun(x):
     return x
 
 
-def plot_pmf(p_vec,model = ypm.model,true_pmf = np.zeros(1)):
+def plot_pmf(p_vec,model = ypm.model,true_pmf = np.zeros(1),return_pmfs = False):
     
     if true_pmf.any():
 
@@ -104,6 +104,9 @@ def plot_pmf(p_vec,model = ypm.model,true_pmf = np.zeros(1)):
         ax1[1].set_ylabel('# nascent RNA')
         plt.show();
         
+        if return_pmf == True:
+            return(pred_,true_pmf_)
+        
     else:
         p, true_pmf_ = cme.calculate_exact_cme(p_vec,method='quad_vec',xmax_fun=xmax_fun) 
         pred_ = predict_full_pmf(p_vec,true_pmf_,model=model)
@@ -127,9 +130,9 @@ def plot_pmf(p_vec,model = ypm.model,true_pmf = np.zeros(1)):
         ax1[1].set_xlabel('# mature RNA')
         ax1[1].set_ylabel('# nascent RNA')
         plt.show();
-      
-
-    
+        
+        if return_pmf == True:
+            return(pred_,true_pmf_)
 
 
 def plot_histogram(array,bins,metric='KLD'):
@@ -139,7 +142,7 @@ def plot_histogram(array,bins,metric='KLD'):
     plt.xlabel(metric)
     plt.ylabel('Frequency')
     plt.show();
-    
+
 
 def plot_CDF(array,metric='KLD'):
 
@@ -252,7 +255,7 @@ def plot_param_quantiles(klds,train_list):
     ax[0].legend()
     fig.tight_layout()
     plt.title('MLP 1 Parameters Colored by KLD Quantile')
-    
+
 
 
 def save_model_and_meta(model,model_config,train_config,train_loss,valid_loss,time,path,name):
@@ -262,8 +265,8 @@ def save_model_and_meta(model,model_config,train_config,train_loss,valid_loss,ti
     meta = np.array([model_config,train_config,e,t,time])
     
     np.save(path+name+'_meta',meta)
-    
-    
+
+
 class Trained_Model():
     
     def __init__(self, path, name):
