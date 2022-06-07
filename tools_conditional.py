@@ -104,7 +104,7 @@ def plot_pmf(p_vec,model = ypm.model,true_pmf = np.zeros(1),return_pmfs = False)
         ax1[1].set_ylabel('# nascent RNA')
         plt.show();
         
-        if return_pmf == True:
+        if return_pmfs == True:
             return(pred_,true_pmf_)
         
     else:
@@ -131,7 +131,7 @@ def plot_pmf(p_vec,model = ypm.model,true_pmf = np.zeros(1),return_pmfs = False)
         ax1[1].set_ylabel('# nascent RNA')
         plt.show();
         
-        if return_pmf == True:
+        if return_pmfs == True:
             return(pred_,true_pmf_)
 
 
