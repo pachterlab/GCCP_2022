@@ -149,14 +149,14 @@ class TrainedModel():
         self.model = mdl.MLP(input_size, num_hidden_units, num_hidden_layers, output_size)
         self.model.load_state_dict(torch.load(path+'_MODEL'))
         self.model.eval()
+
         
-        
-        
+
 
 
 
 # if no model is given, will use the direct final trained model stored in ./models/
-model_path = './models/direct_256u_3l_4t_MODEL'       
+model_path = './models/direct_models/direct_256u_3l_4t_MODEL'       
 
 # load in model
 model_direct = MLP(input_size=5, num_hidden_units = 256, num_hidden_layers = 3, output_size = 1)
