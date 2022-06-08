@@ -1,0 +1,10 @@
+Models trained for direct regression: prediction a single P(n,m) given parameter vector and n,m values. 
+
+Models: 
+* 256 nodes, 2,3,4,5 layers
+* 3 layers, 128,256,512,1024,and 3000 nodes
+* final model chosen based on above parameters, trained on more examples: direct_256u_3l_4t_MODEL
+
+
+
+All model meta data stored in .npy files with same name as MODEL files. 
