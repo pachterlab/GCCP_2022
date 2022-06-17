@@ -1,11 +1,11 @@
 <!-- #region -->
-# GCCP_2022
+# Spectral neural approximations for models of transcriptional dynamics
 
 
 ----------
 
 
-This repository contains data, training and testing scripts, models, and figure generation scripts for  "Spectral neural approximations for models of transcriptional dynamics." 
+This repository contains data, training and testing scripts, models, and figure generation scripts for the preprint [Spectral neural approximations for models of transcriptional dynamics](https://www.biorxiv.org/content/10.1101/2022.06.16.496448v1) by Gennady Gorin, Maria T. Carilli, Tara Chari and Lior Pachter. 
 
 -------
 
