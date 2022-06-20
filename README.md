@@ -15,7 +15,7 @@ This repository contains data, training and testing scripts, models, and figure 
 
 ### Data:
 
-Contains data used to train, validate, and test models for kernel weight regression that contain conditional parameter vectors and conditional distributions for 256 unique parameters {${b,\beta,\gamma}$} (corresponding to several thousand conditional parameter vectors and conditional distributions per file). It also contains testing files with 256 unique parameters {${b,\beta,\gamma}$}, the same as those in the correspondingly numbered conditional testing files, and their full joint distributions: 
+Contains data used to train, validate, and test models for kernel weight regression that contain conditional examples and conditional distributions for 256 unique rate vectors {${b,\beta,\gamma}$} (corresponding to thousands ofs conditional examples and conditional distributions per file). It also contains testing files with 256 unique rate vectors {${b,\beta,\gamma}$}, the same as those in the correspondingly numbered conditional testing files, and their full joint distributions: 
 * 6 train files: <code>256_train_*.npy</code>   (conditional)
 * 2 validation files: <code>256_valid_*.npy</code>    (conditional)
 * 3 testing files: <code>256_test_*.npy</code>    (conditional)
