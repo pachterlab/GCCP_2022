@@ -3,8 +3,6 @@ from scipy import stats
 
 import torch
 torch.set_default_tensor_type(torch.FloatTensor)
-import torch.nn as nn
-import torch.nn.functional as F
 
 import train_conditional as train
 import exact_cme as cme
@@ -221,5 +219,5 @@ def approximate_conditional_tensorval(p,n,m):
     P = prefactor +  y_
 
     return np.exp(P)
-    
+
     

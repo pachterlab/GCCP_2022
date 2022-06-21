@@ -2,7 +2,6 @@
 
 import random
 import numpy as np
-from itertools import repeat
 
 import torch
 import torch.nn as nn
