@@ -166,28 +166,28 @@ for i in range(256*3):
     rate_vec = data_array[i][0]
 
     t1 = time.time()
-    pred = ypm.get_prob(rate_vec,n_range=np.arange(0),m_range=np.arange(0))
+    pred = ypm.get_prob(rate_vec,n_range=np.arange(1),m_range=np.arange(1))
     t2 = time.time()
 
-    times_NN_onepoint[i] = (t2-t1)
+    NN_times_onepoint[i] = (t2-t1)
 
     t1 = time.time()
     pred = direct.predict_point(rate_vec,0,0)
     t2 = time.time()
     
+    direct_times_onepoint[i] = t2-t1
+    
+    
     t1 = time.time()
-    N,M = np.meshgrid(np.arange(0),np.arange(0),indexing='ij')
+    N,M = np.meshgrid(np.arange(1),np.arange(1),indexing='ij')
     y_NB = ypm.approximate_conditional_tensorval(rate_vec,N,M).detach().numpy()
     t2 = time.time()
 
-    times_NB_onepoint[i] = (t2-t1)
+    NB_times_onepoint[i] = (t2-t1)
 
 np.save('./results/NN_times_onepoint',NN_times_onepoint)
 np.save('./results/NB_times_onepoint',NB_times_onepoint)
 np.save('./results/direct_model256_3_4t_times_onepoint',direct_times_onepoint)
-
-
-
 
 
 
