@@ -5,7 +5,6 @@ torch.set_default_dtype(torch.float32)
 import pickle
 
 import os, sys
-sys.path.append('../train_1NB')
 
 import training_nnNB as train
 
@@ -13,7 +12,7 @@ import training_nnNB as train
 
 # load in meta
 
-f = '../models/nnNB_models/3hl_256hu_10bs_varmax'
+f = './models/nnNB_models/3hl_256hu_10bs_varmax'
 file = open(f + '_meta','rb')
 meta = pickle.load(file)
 file.close()
@@ -121,7 +120,7 @@ def get_ypred_log(vecs,m,s_mean,s_var,use_old = False):
 
 
 
-def nnNB_prob(p,n,m,model,use_old=False):
+def nnNB_prob(p,n,m,model=model1,use_old=False):
     ''' Calculates probability for bursty model using input model.
     '''
     
