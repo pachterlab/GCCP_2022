@@ -125,7 +125,6 @@ for i in range(256):
 
 
 np.save('../results/compare_array_norm_hellinger',compare_array_norm_hellinger)
-np.save('../results/compare_array_unnorm_hellinger',compare_array_unnorm_hellinger)
 np.save('../results/compare_array_hellinger',compare_array_hellinger)
 
 
