@@ -2,3 +2,12 @@
 data/
 ./results/
 results/
+GCCP_2022/data/
+GCCP_2022/results/
+
+./models/
+models/
+./figs/
+figs/
+GCCP_2022/models/
+GCCP_2022/figs/
