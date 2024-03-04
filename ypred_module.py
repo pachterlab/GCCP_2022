@@ -1,15 +1,33 @@
+# +
+import sys,os
+
 import numpy as np
 from scipy import stats
+# -
 
 import torch
 torch.set_default_tensor_type(torch.FloatTensor)
 
+# +
 import train_conditional as train
 import exact_cme as cme
 
+import importlib_resources
+
+# +
 # if no model is given, will use the final trained model stored in ./models/
-model_path = './models/best_model_MODEL'       
+try:
+    package_resources = importlib_resources.files("ypred_module")
+    model_path = os.path.join(package_resources,'models/best_model_MODEL')
+except:
+    import sys
+    package_resources = importlib_resources.files("ypred_module")
+    model_path = os.path.join(package_resources,'models/best_model_MODEL')
+    
+    
+# model_path = './models/best_model_MODEL'       
 npdf = 10
+# -
 
 # load in model
 model = train.MLP(7,10,256,256)

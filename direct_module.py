@@ -1,4 +1,4 @@
-
+import os,sys,importlib_resources
 import numpy as np
 
 import torch
@@ -7,7 +7,13 @@ import torch.nn.functional as F
 
 import matplotlib as plt
 
+# +
+# if no model is given, will use the direct final trained model stored in ./models/
+package_resources = importlib_resources.files("direct_module")
+model_path = os.path.join(package_resources,'models/direct_models/direct_256u_3l_4t_MODEL')
 
+
+# -
 
 
 
@@ -154,9 +160,6 @@ class TrainedModel():
 
 
 
-
-# if no model is given, will use the direct final trained model stored in ./models/
-model_path = './models/direct_models/direct_256u_3l_4t_MODEL'       
 
 # load in model
 model_direct = MLP(input_size=5, num_hidden_units = 256, num_hidden_layers = 3, output_size = 1)

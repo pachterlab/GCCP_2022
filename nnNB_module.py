@@ -1,3 +1,4 @@
+import os,sys,importlib_resources
 import numpy as np
 import torch
 torch.set_default_dtype(torch.float32)
@@ -8,14 +9,17 @@ import os, sys
 
 import training_nnNB as train
 
-
+package_resources = importlib_resources.files("nnNB_module")
+f = os.path.join(package_resources,'models/nnNB_models/3hl_256hu_10bs_varmax_meta')
 
 # load in meta
 
-f = './models/nnNB_models/3hl_256hu_10bs_varmax'
+# +
+
 file = open(f + '_meta','rb')
 meta = pickle.load(file)
 file.close()
+# -
 
 
 # load in model
