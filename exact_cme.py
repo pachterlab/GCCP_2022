@@ -84,10 +84,11 @@ def calculate_exact_cme(p,method,xmax_fun):
     return([p,np.array(y_save)])
 
 
-def generate_param_vectors(N,b_bounds= [1,300], beta_bounds = [0.05,50], gamma_bounds = [0.05,50], ):
+def generate_param_vectors(N,b_bounds= [1,300], beta_bounds = [0.05,50], gamma_bounds = [0.05,50],
+                           max_mean=1e3):
     '''Generates N parameter vectors randomly spaced in logspace between bounds.'''
     
-    logbnd = np.log10([[1,300],[0.05,50],[0.05,50]])
+    logbnd = np.log10([b_bounds,beta_bounds,gamma_bounds])
     dbnd = logbnd[:,1]-logbnd[:,0]
     lbnd = logbnd[:,0]
     param_vectors = np.zeros((N,3))
@@ -96,18 +97,18 @@ def generate_param_vectors(N,b_bounds= [1,300], beta_bounds = [0.05,50], gamma_b
     i = 0
     a = 0
     while i<N:
-        a += 1 
-        th = np.random.rand(3)*dbnd+lbnd
-        MU, VAR, STD, xmax=get_moments(10**th)
+            a += 1 
+            th = np.random.rand(3)*dbnd+lbnd
+            MU, VAR, STD, xmax=get_moments(10**th)
 
-        if xmax[0] > 1e3:
-            continue
-        if xmax[1] > 1e3:
-            continue
-        if th[1] == th[2]:
-            continue
-        else:
-            param_vectors[i,:] = np.float32(th)
-            i+=1
-            
+            if xmax[0] > max_mean:
+                continue
+            if xmax[1] > max_mean:
+                continue
+            if th[1] == th[2]:
+                continue
+            else:
+                param_vectors[i,:] = np.float32(th)
+                i+=1
+
     return(param_vectors)

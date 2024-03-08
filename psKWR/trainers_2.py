@@ -77,8 +77,8 @@ class burstyBernoulliDataset():
             batch_idxs.append(idx[i*batchsize:(i+1)*batchsize])
         
         return batch_idxs
-    
-    
+
+
 def get_log_cond_moments(params):
     ''' Returns the logmean and logvar given a moment matched bivariate log-normal distribution.
     '''
@@ -196,13 +196,13 @@ class Trainer():
                     raise ValueError('the returned cond stds for NB are bad')
 #                     pdb.set_trace()
 #                     breakpoint()
-                
+
 #                for j,layer in enumerate(self.model.module_list):
 #                     if torch.any(~torch.isfinite(layer.weight)):
 #                         pdb.set_trace()
 #                         breakpoint()
-                
-                
+
+
                 loss = self.eval_cond_loss(weights,cond_means,cond_stds,cond_pss,params,loss_function,print_loss=False)
 #                 print('weights after loss:',weights[0])
 #                 print('cond_means after loss:',cond_means[0])
@@ -245,10 +245,10 @@ class Trainer():
                                              loss_function)
 
             valid_loss[e] = valid_loss_
- 
+
 #         return({'valid_loss' : valid_loss, 'train_loss' : train_loss, 'final_p' : params[0,:],
 #                 'final_cond' : conds[0]})
-        
+
         return({'valid_loss' : valid_loss, 'train_loss' : train_loss, 
                'train_loss_batch' : train_loss_batch})
     
@@ -265,13 +265,13 @@ class Trainer():
         cond_rs = (cond_means**2/(cond_stds**2-cond_means))
         
         filt2 = nb_index[:,:,None].repeat(1,1,len(m))
-        
-        
+
+
 #         if filt2.sum() > 0:
 #             print('using nb somewhere')
 #         else:
 #             print('NOT using NB ANYWHERE')
-        
+
         if torch.any(~torch.isfinite(cond_stds)):
 #             pdb.set_trace()
 #             breakpoint()
@@ -326,7 +326,7 @@ class Trainer():
 #             print('R COND',cond_rs)
 #             print('COND_MEAN',cond_means)
 
-        
+
 #         # negative binomial
 #         a = torch.lgamma(m + cond_rs + eps)[filt2]
 #         b = torch.lgamma(cond_rs + eps)[filt1.reshape(1000,1,3)]
@@ -347,41 +347,41 @@ class Trainer():
 #             print(y_)
 #             print('R COND',cond_rs)
 #             print('COND_MEAN',cond_means)
-            
+
 #         step1 = torch.special.gammaln(m + cond_rs + eps)\
 #                 - torch.special.gammaln(cond_rs + eps)\
 #                 + m * torch.log(cond_means/(cond_rs + cond_means + eps) + eps)\
 #                 + cond_rs * torch.log(cond_rs/(cond_rs + cond_means + eps))\
 #                 - m * torch.log(cond_means + eps)\
 #                 + cond_means
-        
+
         step1 = torch.special.gammaln(m + cond_rs + eps)\
                 - torch.special.gammaln(cond_rs + eps)\
                 - m * torch.log(cond_rs + cond_means + eps)\
                 + cond_means\
                 + cond_rs * torch.log(cond_rs/(cond_rs + cond_means + eps) + eps)
-        
-        
+
+
 #         if torch.any(~torch.isfinite(torch.special.gammaln(m + cond_rs))):
 #             print('Bad torch.special.gammaln(m + cond_rs)')
-            
+
 #         if torch.any(~torch.isfinite(torch.special.gammaln(cond_rs))):
 #             print('Bad torch.special.gammaln(cond_rs)')
-            
+
 #         if torch.any(~torch.isfinite(m * torch.log(cond_rs + cond_means + eps))):
 #             print('Bad m * torch.log(cond_rs + cond_means + eps)')
-            
+
 #         if torch.any(~torch.isfinite(cond_rs * torch.log(cond_rs/(cond_rs + cond_means) + eps))):
 #             print('Bad cond_rs * torch.log(cond_rs/(cond_rs + cond_means) + eps)')
-            
+
             
             
         if torch.any(~torch.isfinite(step1)):
             print('Bad STEP')
             pdb.set_trace()
             breakpoint()
-            
-        
+
+
 #         a = (torch.special.gammaln(m + cond_rs + eps) + torch.special.gammaln(cond_rs + eps))[filt2]
 # #         print('torch.special.gammaln(m + cond_rs + eps)', a[a>1e10], a[a<1e-10])
 # #         b = torch.special.gammaln(cond_rs + eps)[filt2]
@@ -396,10 +396,10 @@ class Trainer():
 #             print('COND_MEAN',cond_means[filt2])
 #             print(cond_stds[filt2])
 #             raise ValueError('bad step[filt2]') 
-        
+
 #         step_test = torch.ones(cond_rs.shape[0],300,3)*eps
 #         step_test[~filt2] = step_test[~filt2]/0
-        
+
         y_[filt2] += step1[filt2] 
 #         y_[filt2] += step
 #         y_ += step1
@@ -429,7 +429,7 @@ class Trainer():
             print('Bad Y NB post sum')
             pdb.set_trace()
             breakpoint()
-            
+
 #             print(y_)
 #             print('cond_stds',cond_stds)
 #             print('weights',weights)
@@ -437,7 +437,7 @@ class Trainer():
 #             print('cond_means',cond_means)
 #             print(filt)
 #             raise ValueError('bad Y NB') 
- 
+
         return(Y)
     
 
@@ -447,10 +447,10 @@ class Trainer():
         '''Evaluate the predicted conditional probability given model returned cond_mean
         and cond_var (negative binomial). Then, evaluate KLD between predicted and returned.
         '''
-        
+
 #         if not isinstance(cond_pss, Iterable):
 #             cond_pss = [cond_pss]
-        
+
 #         klds = 0
         cond = cond_pss
         m = torch.arange(300)
@@ -465,10 +465,10 @@ class Trainer():
             print('Bad PRED')
             pdb.set_trace()
             breakpoint()
-            
+
 #             pred[pred < eps] = eps
 #             cond[cond < eps] = eps
-            
+
         
 
         
@@ -559,17 +559,17 @@ class Trainer():
             # joint probability
             pred_joint = torch.exp(log_p_nascent[:,None])*pred
             pred_joint[pred_joint < eps] += (eps - pred_joint[pred_joint < eps])
-            
-            
+
+
 #             print('log_p_nascent',log_p_nascent[0:10]) 
 #             print('p_nascent',torch.exp(log_p_nascent[0:10]))
-            
+
 #             print('PRED',pred[0,0:10])
-            
+
 #             print('PRED JOINT',pred_joint[0,0:10])
 #             print('COND',cond[0,0:10])
-            
-            
+
+
             loss = .5 * torch.sum( (torch.sqrt(cond) - torch.sqrt(pred_joint))**2, axis = 1 )
             loss = torch.sum(loss)
         return(loss)
