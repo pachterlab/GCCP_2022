@@ -1,3 +1,8 @@
+
+import numpy as np
+import time
+import pickle
+
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -6,25 +11,21 @@ args = parser.parse_args()
 
 name = args.name
 
-import sys
+import sys,os
 
-# add paths
+sys.path.append('../psKWR/')
+sys.path.append('../monod/src/')
 sys.path.append('../monod/src/monod/')
-sys.path.append('../monod/src/monod/models/')
+
+
+# monod
+from monod import cme_toolbox 
+from nn_toolbox import get_moments, get_conditional_moments, get_quantile_moments, get_NORM
+
 sys.path.append('../')
 
-import numpy as np
-import time 
-import matplotlib.pyplot as plt
-
-import ypred_module as ypm # need for MMNB and random weights
-import direct_module as direct # need for direct
-import train_conditional as train # need for data loading
-
-from nn_toolbox import get_moments, get_conditional_moments, get_quantile_moments, get_NORM
-import cme_toolbox
-
-import monod # need for QV, FQ, KWR, and psKWR
+import ypred_module as ypm
+import train_conditional as train
 
 
 
