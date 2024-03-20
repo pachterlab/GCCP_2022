@@ -259,10 +259,29 @@ for i in range(100):
     
 # save!!
 
-with open('./ssa_density_dict', 'wb') as file:
+with open('../results/ssa_density_dict', 'wb') as file:
     pickle.dump(ssa_dict, file)
 
+    
+new_results_dict = {}
 
+
+for i in range(100):
+    key = f'param_{i}'
+    new_results_dict[key] = {}
+    rd_ = ssa_dict[key]
+    lim_ = rd_[f'Density_10'].shape
+    pmf_ = rd_[f'PMF_QV20'][:lim_[0],:lim_[1]]
+    new_results_dict[key]['PMF_QV20'] = pmf_
+    
+    for num_traj in [10,100,1000,10000,100000]:
+        ssa_dens_ = rd_[f'Density_{num_traj}'][:lim_[0],:lim_[1]]
+        # only save up to limits
+        new_results_dict[key][f'Density_{num_traj}'] = ssa_dens_
+
+with open('./ssa_density_dict_small', 'wb') as file:
+    pickle.dump(new_results_dict, file)
+    
 # ----------
 # 
 # My old SSA code.
