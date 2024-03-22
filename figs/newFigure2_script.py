@@ -72,6 +72,7 @@ fitmodel_psKWR = cme_toolbox.CMEModel(bio_model='Bursty',seq_model='None',quad_m
 
 # store 
 timing = {'state_spaces' : np.ones(len(data_set)),
+          'params' : [],
           'QV20' : {'norm' : np.ones(len(data_set)), 'unnorm' : np.ones(len(data_set))},
           'QV10' : {'norm' : np.ones(len(data_set)), 'unnorm' : np.ones(len(data_set))},
           'QV4' : {'norm' : np.ones(len(data_set)), 'unnorm' : np.ones(len(data_set))},
@@ -113,11 +114,9 @@ kld = { 'state_spaces' : np.ones(len(data_set)),
 
 # In[ ]:
 
-
 for i in range(256):
     print(i)
     p_ = data_set[i][0]
-    
     mu_n,mu_m,var_n,var_m,std_n,std_m,COV = get_moments(10**p_[0],10**p_[1],10**p_[2])
     lim_ = [int(np.max([np.ceil(mu_n+1*std_n),10])),int(np.max([np.ceil(mu_m+1*std_m),10]))]
     ss_ = lim_[0]*lim_[1]
@@ -126,6 +125,7 @@ for i in range(256):
     lim_large = [int(np.max([np.ceil(mu_n+20*std_n),10])),int(np.max([np.ceil(mu_m+20*std_m),10]))]
     print(ss_)
     timing['state_spaces'][i] = ss_
+    timing['params'].append(p_)
     hellinger['state_spaces'][i] = ss_
     t1 = time.time()
     qv20 = fitmodel_qv.eval_model_pss(p_,limits=lim_large)
@@ -188,6 +188,9 @@ for i in range(256):
     kld['FQ']['norm'][i]=kld_/ss_
     
     # KWR
+    if i == 0:
+        # burn in
+        kwr = fitmodel_KWR.eval_model_pss(p_,limits=lim_)
     t1 = time.time()
     kwr = fitmodel_KWR.eval_model_pss(p_,limits=lim_)
     t_ = time.time()-t1
